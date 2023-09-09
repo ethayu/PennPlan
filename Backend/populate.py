@@ -1,6 +1,6 @@
 from pymongo.mongo_client import MongoClient
 from pymongo.server_api import ServerApi
-import uuid
+import uuid, jsons
 
 
 def setup():
@@ -17,10 +17,18 @@ def setup():
         print(e)
     return client.Database
 
+class PCR_Data:
+    def __init__(self, num_reviewers, name, amount_learned, course_quality, difficulty, work_required):
+        self.num_reviewers = num_reviewers
+        self.name = name
+        self.amount_learned = amount_learned
+        self.course_quality = course_quality
+        self.difficulty = difficulty
+        self.work_required = work_required
+
 #create course class
 class Course:
-    def __init__(self, id, title, name, description, prereqs, pcr_data, embedding):
-        self.id = id
+    def __init__(self, title, name, description, prereqs, pcr_data: PCR_Data, embedding):
         self.title = title
         self.name = name
         self.description = description
@@ -28,20 +36,34 @@ class Course:
         self.pcr_data = pcr_data
         self.embedding = embedding
     
-    def json(self):
-        return {
-            "id": self.id,
-            "title": self.title,
-            "name": self.name,
-            "description": self.description,
-            "prereqs": self.prereqs,
-            "pcr_data": self.pcr_data,
-            "embedding": self.embedding
-        }
+
+class Field:
+    def __init__(self, name, reqs, electives): #to complete field, need to take courses in reqs, and $electives.value courses from $electives.key
+        self.name = name
+        self.reqs = reqs
+        self.electives = electives
+
+class Concentration:
+    def __init__(self, name, reqs, course_bank, number): #to complete concentration, need to take courses in reqs, and $number courses from $course_bank
+        self.name = name
+        self.reqs = reqs
+        self.course_bank = course_bank
+        self.number = number
     
 def addCourse(course: Course, db):
-    courses = db.courses
-    courses.insert_one(course)
+    courses = db.Courses
+    json = vars(course)
+    json['pcr_data'] = vars(course.pcr_data)
+    courses.insert_one(json)
+
+def addMajor(major: Field, db):
+    majors = db.Majors
+    majors.insert_one(vars(major))
+
+def addMinor(minor: Field, db):
+    minors = db.Minors
+    minors.insert_one(vars(minor))
+
+
 
 db = setup()
-
