@@ -1,6 +1,5 @@
 from pymongo.mongo_client import MongoClient
 from pymongo.server_api import ServerApi
-import uuid, jsons
 
 
 def setup():
@@ -35,7 +34,7 @@ class Course:
         self.prereqs = prereqs
         self.pcr_data = pcr_data
         self.embedding = embedding
-    
+
 
 class Field:
     def __init__(self, name, reqs, electives): #to complete field, need to take courses in reqs, and $electives.value courses from $electives.key
@@ -49,7 +48,7 @@ class Concentration:
         self.reqs = reqs
         self.course_bank = course_bank
         self.number = number
-    
+
 def addCourse(course: Course, db):
     courses = db.Courses
     json = vars(course)
@@ -67,3 +66,5 @@ def addMinor(minor: Field, db):
 
 
 db = setup()
+CIS = Field("Computer science", ["Cis 160", 'cis 120'], {'natural sciences': 3})
+addMajor(CIS, db)
