@@ -1,0 +1,12 @@
+.multi-select {
+  --rmsc-selected: #cbd5e1;
+  --rmsc-border:#cbd5e1;
+  --rmsc-gray: #cbd5e1;
+  --rmsc-background: white;
+  --rmsc-spacing: 5px;
+  --rmsc-radius: 0.5rem;
+  --rmsc-height: 38px;
+  --rmsc-p: 0px;
+    width: 100%;
+    align-self:auto
+}
