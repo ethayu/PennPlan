@@ -1,12 +1,29 @@
+.rmsc { 
+  --rmsc-primary: #4285f4;
+  --rmsc-hover: #f1f3f5;
+  --rmsc-selected: #e2e6ea;
+  --rmsc-border: #ccc;
+  --rmsc-gray: #aaa;
+  --rmsc-background: #fff;
+  --rmsc-spacing: 4px;
+  --rmsc-radius: 8px;
+  --rmsc-h: 40px;
+  --rmsc-p: 10px;
+}
+
 .multi-select {
-  --rmsc-selected: #cbd5e1;
-  --rmsc-border:#cbd5e1;
-  --rmsc-gray: #cbd5e1;
-  --rmsc-background: white;
-  --rmsc-spacing: 5px;
-  --rmsc-radius: 0.5rem;
-  --rmsc-height: 38px;
-  --rmsc-p: 0px;
-    width: 100%;
-    align-self:auto
+  margin: auto;
+
+}
+
+.rmsc .dropdown-heading {
+  justify-items:end;
+}
+
+.dropdown-container {
+  width: 12rem
+}
+
+svg {
+  vertical-align: bottom
 }
