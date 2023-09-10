@@ -21,7 +21,7 @@ function Class({ name, toggleModal }) {
   );
 }
 
-function Tables({ number, toggleModal }) {
+function Tables({ number, toggleModal, schedule }) {
   let components = [];
   for (var i = 9 - number; i < 9; i++) {
     components.push(
@@ -31,12 +31,12 @@ function Tables({ number, toggleModal }) {
             Semester {i}
           </span>
         </div>
-        <Class name="Class 1" toggleModal={toggleModal}></Class>
-        <Class name="Class 2" toggleModal={toggleModal}></Class>
-        <Class name="Class 3" toggleModal={toggleModal}></Class>
-        <Class name="Class 4" toggleModal={toggleModal}></Class>
-        <Class name="Class 5" toggleModal={toggleModal}></Class>
-        <Class name="Class 6" toggleModal={toggleModal}></Class>
+        <Class name={schedule[i - 1][0]} toggleModal={toggleModal}></Class>
+        <Class name={schedule[i - 1][1]} toggleModal={toggleModal}></Class>
+        <Class name={schedule[i - 1][2]} toggleModal={toggleModal}></Class>
+        <Class name={schedule[i - 1][3]} toggleModal={toggleModal}></Class>
+        <Class name={schedule[i - 1][4]} toggleModal={toggleModal}></Class>
+        <Class name={schedule[i - 1][5]} toggleModal={toggleModal}></Class>
         {/* <Class name="Class 7" toggleModal={toggleModal}></Class> */}
       </div>
     );
@@ -50,6 +50,16 @@ function App() {
     setModal(!modal);
   };
 
+  const [schedule, setSchedule] = useState([["Class 1", "Class 2", "Class 3", "Class 4", "Class 5", "Class 6"],
+  ["Class 1", "Class 2", "Class 3", "Class 4", "Class 5", "Class 6"],
+  ["Class 1", "Class 2", "Class 3", "Class 4", "Class 5", "Class 6"],
+  ["Class 1", "Class 2", "Class 3", "Class 4", "Class 5", "Class 6"],
+  ["Class 1", "Class 2", "Class 3", "Class 4", "Class 5", "Class 6"],
+  ["Class 1", "Class 2", "Class 3", "Class 4", "Class 5", "Class 6"],
+  ["Class 1", "Class 2", "Class 3", "Class 4", "Class 5", "Class 6"],
+  ["Class 1", "Class 2", "Class 3", "Class 4", "Class 5", "Class 6"],
+ ]);
+
   useEffect(() => {
     // declare the async data fetching function
     const fetchData = async () => {
@@ -61,9 +71,9 @@ function App() {
     };
 
     // call the function
-    fetchData().then((data) => {
-      alert(data[0]["name"]);
-    });
+    // fetchData().then((data) => {
+    //   alert(data[0]["name"]);
+    // });
   }, []);
   return (
     <div className="App h-screen flex flex-col font-nunito">
@@ -178,6 +188,7 @@ function App() {
               number={8}
               toggleModal={toggleModal}
               class="self-center"
+              schedule={schedule}
             ></Tables>
           </div>
         </div>
