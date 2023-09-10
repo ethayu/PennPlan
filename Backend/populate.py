@@ -17,10 +17,7 @@ def setup():
     return client.Database
 
 class PCR_Data:
-    def __init__(self, num_reviewers, name, amount_learned, course_quality, difficulty, work_required):
-        self.num_reviewers = num_reviewers
-        self.name = name
-        self.amount_learned = amount_learned
+    def __init__(self, course_quality, difficulty, work_required):
         self.course_quality = course_quality
         self.difficulty = difficulty
         self.work_required = work_required
