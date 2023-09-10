@@ -1,5 +1,6 @@
 from pymongo.mongo_client import MongoClient
 from pymongo.server_api import ServerApi
+import json
 
 
 def setup():
@@ -17,10 +18,7 @@ def setup():
     return client.Database
 
 class PCR_Data:
-    def __init__(self, num_reviewers, name, amount_learned, course_quality, difficulty, work_required):
-        self.num_reviewers = num_reviewers
-        self.name = name
-        self.amount_learned = amount_learned
+    def __init__(self, course_quality, difficulty, work_required):
         self.course_quality = course_quality
         self.difficulty = difficulty
         self.work_required = work_required
@@ -34,6 +32,8 @@ class Course:
         self.prereqs = prereqs
         self.pcr_data = pcr_data
         self.embedding = embedding
+    def jsontoCourse(json):
+        return Course(json["title"], json["name"], json["description"], json["prereqs"], PCR_Data(json["pcr_data"]["num_reviewers"], json["pcr_data"]["name"], json["pcr_data"]["amount_learned"], json["pcr_data"]["course_quality"], json["pcr_data"]["difficulty"], json["pcr_data"]["work_required"]), json["embedding"])
 
 
 class Field:
@@ -64,7 +64,30 @@ def addMinor(minor: Field, db):
     minors.insert_one(vars(minor))
 
 
+# Load number: course title
+with open("course_name_map.json", 'r') as f:
+    number_title = json.load(f)
 
-db = setup()
-CIS = Field("Computer science", ["Cis 160", 'cis 120'], {'natural sciences': 3})
-addMajor(CIS, db)
+# Load number: course description
+with open("course_description_map.json", 'r') as f:
+    number_description = json.load(f)
+
+# Load number: pcr
+with open("course_review.json", 'r') as f:
+    number_pcr = json.load(f)
+
+# Load number: prerequisites
+with open("prerequisites.json", 'r') as f:
+    number_prereqs = json.load(f)
+
+
+
+print(number_description)
+# db = setup()
+# CIS160 = Course(title='CIS 1600',
+#                 name='Mathematical Foundations of Computer Science',
+#                 description='This course provides an introduction to the mathematical foundations of computer science. Topics include logic, set theory, induction, functions and relations, combinatorics and graph theory.',
+#                 prereqs=['CIS 1200', 'CIS 1600'],
+#                 pcr_data=PCR_Data(4.5, 3.5, 5.0),
+#                 embedding=[1, 2, 3, 4, 5])
+# addCourse(CIS160, db)
