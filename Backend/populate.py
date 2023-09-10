@@ -34,7 +34,9 @@ class Course:
         self.prereqs = prereqs
         self.pcr_data = pcr_data
         self.embedding = embedding
-
+    def jsontoCourse(json):
+        return Course(json["title"], json["name"], json["description"], json["prereqs"], PCR_Data(json["pcr_data"]["num_reviewers"], json["pcr_data"]["name"], json["pcr_data"]["amount_learned"], json["pcr_data"]["course_quality"], json["pcr_data"]["difficulty"], json["pcr_data"]["work_required"]), json["embedding"])
+    
 
 class Field:
     def __init__(self, name, reqs, electives): #to complete field, need to take courses in reqs, and $electives.value courses from $electives.key
@@ -62,9 +64,3 @@ def addMajor(major: Field, db):
 def addMinor(minor: Field, db):
     minors = db.Minors
     minors.insert_one(vars(minor))
-
-
-
-db = setup()
-CIS = Field("Computer science", ["Cis 160", 'cis 120'], {'natural sciences': 3})
-addMajor(CIS, db)
