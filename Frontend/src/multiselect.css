@@ -16,6 +16,10 @@
 
 }
 
+.dropdown-heading-value > .gray {
+  color: white !important
+} 
+
 .rmsc .dropdown-heading {
   justify-items:end;
 }

@@ -24,6 +24,7 @@ module.exports = {
         'black': '#001011',
         'lightBlue': '#64E9EE',
         'medBlue': '#3AAFB9',
+        'medDarkBlue': '#2D8C94',
         'darkBlue': '#093A3E',
         'grayBlue': '#97C8EB',
   
@@ -35,7 +36,8 @@ module.exports = {
         'gray-dark': '#273444',
         'gray': '#8492a6',
         'lightGray': '#ADADAD',
-        'test': '#6DAEDB'
+        'test': '#6DAEDB',
+        'specialGray': '#aaa'
       },
       borderRadius: {
         '4xl': '2rem',
