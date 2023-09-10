@@ -75,6 +75,10 @@ function App() {
     //   alert(data[0]["name"]);
     // });
   }, []);
+
+  const [major, setMajor] = useState('');
+  // console.log(major);
+
   return (
     <div className="App h-screen flex flex-col font-nunito">
       <nav class="bg-slate-800 border-gray-200 drop-shadow-2xl z-10">
@@ -105,12 +109,15 @@ function App() {
               Major
             </div>
             <select
-              name="Major"
+              name="Major" id="major_select_id"
               class="mt-1 mb-3 w-48 self-center text-center bg-white text-black text-sm text-center rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5"
             >
               <option disabled hidden selected class="text-slate-700"></option>
               <option class="text-gray" value="CS">
                 Computer Science (BSE)
+              </option>
+              <option class="text-gray" value="BE">
+                Bioengineering (BSE)
               </option>
             </select>
             <div class="text-sm self-center text-left w-48 text-white">
@@ -165,6 +172,7 @@ function App() {
             <button
               type="submit"
               class="mt-7 mb-7 self-center text-white bg-medBlue hover:bg-medDarkBlue font-medium rounded-lg text-sm w-32 sm:w-auto px-5 py-2.5 text-center"
+              onClick={(e) => {setMajor(document.getElementById("major_select_id").value); alert(document.getElementById("major_select_id").value)}}
             >
               Create a Course Plan
             </button>
