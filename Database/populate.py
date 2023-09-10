@@ -33,7 +33,7 @@ class Course:
         self.pcr_data = pcr_data
         self.embedding = embedding
     def jsontoCourse(json):
-        return Course(json["title"], json["name"], json["description"], json["prereqs"], PCR_Data(json["pcr_data"]["num_reviewers"], json["pcr_data"]["name"], json["pcr_data"]["amount_learned"], json["pcr_data"]["course_quality"], json["pcr_data"]["difficulty"], json["pcr_data"]["work_required"]), json["embedding"])
+        return Course(json["title"], json["name"], json["description"], json["prereqs"], PCR_Data(json["pcr_data"]["course_quality"], json["pcr_data"]["difficulty"], json["pcr_data"]["work_required"]), json["embedding"])
 
 
 class Field:
@@ -42,10 +42,19 @@ class Field:
         self.reqs = reqs
         self.electives = electives
 
+# class Minor:
+#     def __init__(self, name, reqs, electives, course_bank, number): #to complete minor, need to take courses in reqs, and $number courses from $course_bank
+#         self.name = name
+#         self.reqs = reqs
+#         self.electives = electives
+#         self.course_bank = course_bank
+#         self.number = number
+
 class Concentration:
-    def __init__(self, name, reqs, course_bank, number): #to complete concentration, need to take courses in reqs, and $number courses from $course_bank
+    def __init__(self, name, reqs, electives, course_bank, number): #to complete concentration, need to take courses in reqs, and $number courses from $course_bank
         self.name = name
         self.reqs = reqs
+        self.electives = electives
         self.course_bank = course_bank
         self.number = number
 
@@ -59,9 +68,9 @@ def addMajor(major: Field, db):
     majors = db.Majors
     majors.insert_one(vars(major))
 
-def addMinor(minor: Field, db):
-    minors = db.Minors
-    minors.insert_one(vars(minor))
+# def addMinor(minor: Minor, db):
+#     minors = db.Minors
+#     minors.insert_one(vars(minor))
 
 
 # Load number: course title
