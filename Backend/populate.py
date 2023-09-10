@@ -1,5 +1,6 @@
 from pymongo.mongo_client import MongoClient
 from pymongo.server_api import ServerApi
+import json
 
 
 def setup():
@@ -33,7 +34,7 @@ class Course:
         self.embedding = embedding
     def jsontoCourse(json):
         return Course(json["title"], json["name"], json["description"], json["prereqs"], PCR_Data(json["pcr_data"]["num_reviewers"], json["pcr_data"]["name"], json["pcr_data"]["amount_learned"], json["pcr_data"]["course_quality"], json["pcr_data"]["difficulty"], json["pcr_data"]["work_required"]), json["embedding"])
-    
+
 
 class Field:
     def __init__(self, name, reqs, electives): #to complete field, need to take courses in reqs, and $electives.value courses from $electives.key
@@ -61,3 +62,32 @@ def addMajor(major: Field, db):
 def addMinor(minor: Field, db):
     minors = db.Minors
     minors.insert_one(vars(minor))
+
+
+# Load number: course title
+with open("course_name_map.json", 'r') as f:
+    number_title = json.load(f)
+
+# Load number: course description
+with open("course_description_map.json", 'r') as f:
+    number_description = json.load(f)
+
+# Load number: pcr
+with open("course_review.json", 'r') as f:
+    number_pcr = json.load(f)
+
+# Load number: prerequisites
+with open("prerequisites.json", 'r') as f:
+    number_prereqs = json.load(f)
+
+
+
+print(number_description)
+# db = setup()
+# CIS160 = Course(title='CIS 1600',
+#                 name='Mathematical Foundations of Computer Science',
+#                 description='This course provides an introduction to the mathematical foundations of computer science. Topics include logic, set theory, induction, functions and relations, combinatorics and graph theory.',
+#                 prereqs=['CIS 1200', 'CIS 1600'],
+#                 pcr_data=PCR_Data(4.5, 3.5, 5.0),
+#                 embedding=[1, 2, 3, 4, 5])
+# addCourse(CIS160, db)
