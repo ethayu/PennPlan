@@ -21,7 +21,7 @@ function MultiselectD(){
       const [selected, setSelected] = useState([]);
     
       return (
-        <div class="self-center flex w-48">
+        <div class="self-center flex w-48 mt-1">
             {/* <h1>Select Fruits</h1> */}
             {/* <pre class="flex-auto">{JSON.stringify(selected)}</pre> */}
             <div class="flex self-center align-items-center mb-2 w-48 bg-pink-50 text-sm focus:ring-blue-500 focus:border-blue-500 block w-45 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-black dark:focus:ring-blue-500 dark:focus:border-blue-500">
