@@ -24,24 +24,25 @@ class node:
         self.visited = True
 
 def queryCourses(major):
-    courses = db.Majors.find_one({"name": major})["reqs"]
-    ret = []
-    for course in courses:
+    required_courses = db.Majors.find_one({"name": major})["reqs"]
+    print("Required courses:", required_courses)
+
+    required_course_objects = []
+    for course in required_courses:
         response = db.Courses.find_one({"title": course})
-        ret.append(Course.jsontoCourse(response))
-    return ret
+        required_course_objects.append(Course.jsontoCourse(response))
+    return required_course_objects
         
-def generateGraph(courses: list[Course]):
+def generateGraph(required_course_objects: list[Course]):
     graph = {}
-    for course in courses:
+    for course in required_course_objects:
         graph[course.name] = node(course)
-    for course in courses:
+
+    for course in required_course_objects:
         for prereq in course.prereqs:
-            if prereq in graph:
-                graph[course.name].addPrereq(prereq)
-            else:
-                graph[course.name].addPrereq(prereq)
+            if prereq not in graph:
                 graph[prereq] = node(prereq)
+            graph[course.name].addPrereq(prereq)
     return graph
 
 def toposort(graph):
@@ -58,6 +59,10 @@ def toposort(graph):
                     if prereq.preqs == []:
                         ret.append(prereq)
     return ret
-courses = queryCourses("Computer Science")
-graph = generateGraph(courses)
-print(toposort(graph))
+
+
+
+required_course_objects = queryCourses("Computer Science, BSE")
+graph = generateGraph(required_course_objects)
+print(graph)
+# print(toposort(graph))
